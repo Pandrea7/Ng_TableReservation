@@ -1,0 +1,16 @@
+<p>Asztalfoglalás</p>
+
+<p>Válassz éttermet!</p>
+
+<form #selectRestaurantForm="ngForm" (submit)="selectRestaurant(selectRestaurantForm)">
+
+    <select name="restaurant" value="getSelectedRestaurant()" required>
+        <option value="" disabled selected>-- Éttermek listája --</option>
+        <option *ngFor="let restaurant of getRestaurants()" 
+                value="restaurant.getName()">
+                {{restaurant.getName()}}
+        </option>
+    </select>
+
+    <input type="submit" value="Tovább"/>
+</form>

@@ -1,0 +1,10 @@
+<form #guestForm="ngForm" (submit)="getGuestData(guestForm)">
+
+  <label>Név:</label>
+  <input type="text" name="guestName" value="guestName" required />
+
+  <label>Email cím:</label>
+  <input type="email" name="guestEmail" value="guestEmail" required />
+
+  <input type="submit" value="Tovább" />
+</form>
