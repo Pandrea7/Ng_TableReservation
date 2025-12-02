@@ -1,12 +1,18 @@
 package pti.sb_tablereservation_rest.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import pti.sb_tablereservation_rest.dto.AvailableTimeSlotDto;
+import pti.sb_tablereservation_rest.dto.ReservationDto;
 import pti.sb_tablereservation_rest.dto.RestaurantDto;
 import pti.sb_tablereservation_rest.service.AppService;
 
@@ -26,11 +32,32 @@ public class AppController {
 	
 	
 	
-	@GetMapping
+	@GetMapping("/")
     public List<RestaurantDto> getRestaurants() {
         
 		List<RestaurantDto> restaurantDtos = service.getAllRestaurants();
 				
 		return restaurantDtos;
     }
+	
+	
+	
+	@GetMapping("/timeslots")
+    public List<AvailableTimeSlotDto> getAvailableTimeSlots(
+            @RequestParam int restaurantId,
+            @RequestParam LocalDate date,
+            @RequestParam int seats) {
+
+		List<AvailableTimeSlotDto> availableTimeSlotDtos = service.getAvailableTimeSlots(restaurantId, date, seats);
+        
+		return availableTimeSlotDtos;
+    }
+	
+	
+	
+	@PostMapping("/reservations")
+	public ReservationDto createReservation(@RequestBody ReservationDto reservationDto) {    
+		
+		return service.createReservation(reservationDto);
+	}
 }

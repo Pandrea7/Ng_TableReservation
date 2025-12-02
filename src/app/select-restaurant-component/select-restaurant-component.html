@@ -4,10 +4,10 @@
 
 <form #selectRestaurantForm="ngForm" (submit)="selectRestaurant(selectRestaurantForm)">
 
-    <select name="restaurant" value="getSelectedRestaurant()" required>
+    <select name="restaurant" ngModel required>
         <option value="" disabled selected>-- Éttermek listája --</option>
         <option *ngFor="let restaurant of getRestaurants()" 
-                value="restaurant.getName()">
+                value={{restaurant.getId()}}>
                 {{restaurant.getName()}}
         </option>
     </select>

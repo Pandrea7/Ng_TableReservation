@@ -1,10 +1,10 @@
 <form #guestForm="ngForm" (submit)="getGuestData(guestForm)">
 
   <label>Név:</label>
-  <input type="text" name="guestName" value="guestName" required />
+  <input type="text" name="guestName" required ngModel/>
 
   <label>Email cím:</label>
-  <input type="email" name="guestEmail" value="guestEmail" required />
+  <input type="email" name="guestEmail" required ngModel/>
 
   <input type="submit" value="Tovább" />
 </form>

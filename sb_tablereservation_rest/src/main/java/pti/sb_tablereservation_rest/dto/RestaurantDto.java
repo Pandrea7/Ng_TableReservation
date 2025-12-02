@@ -2,20 +2,30 @@ package pti.sb_tablereservation_rest.dto;
 
 public class RestaurantDto {
 
+	private int Id;
 	private String name;
 	private int capacityPerHour;
 	private int openHour;
 	private int closeHour;
 	
 	
-	public RestaurantDto(String name, int capacityPerHour, int openHour, int closeHour) {
+	public RestaurantDto(int id, String name, int capacityPerHour, int openHour, int closeHour) {
 		super();
+		Id = id;
 		this.name = name;
 		this.capacityPerHour = capacityPerHour;
 		this.openHour = openHour;
 		this.closeHour = closeHour;
 	}
 	
+	
+	public int getId() {
+		return Id;
+	}
+	
+	public void setId(int id) {
+		Id = id;
+	}
 	
 	public String getName() {
 		return name;
@@ -48,6 +58,8 @@ public class RestaurantDto {
 	public void setCloseHour(int closeHour) {
 		this.closeHour = closeHour;
 	}
+	
+	
 	
 	
 }

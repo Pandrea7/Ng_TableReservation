@@ -20,7 +20,7 @@ export class SelectRestaurantComponent {
   private router: Router;
   private restaurantService: RestaurantService;
   private restaurants: Restaurant[];
-  private selectedRestaurant: Restaurant | null;
+ 
 
 
   public constructor(http: HttpClient, router: Router, restaurantService: RestaurantService){
@@ -29,22 +29,15 @@ export class SelectRestaurantComponent {
     this.router = router;
     this.restaurantService = restaurantService;
     this.restaurants = [];
-    this.selectedRestaurant = null;
     this.loadRestaurants();
 
 
   }
 
-  public getSelectedRestaurant(){
-    return this.selectedRestaurant;
-  }
-
-
   public getRestaurants(): Restaurant[]{
     return this.restaurants;
   }
   
-
 
   public loadRestaurants(){
 
@@ -60,10 +53,22 @@ export class SelectRestaurantComponent {
       }); 
   }
 
+
 public selectRestaurant(form: NgForm){
 
-  if (this.selectedRestaurant) {
-      this.restaurantService.setRestaurant(this.selectedRestaurant);
+    let selectedRestaurantId = form.value.restaurant;
+
+    let selectedRestaurant = null;
+
+    for (let restaurant of this.restaurants) {
+      if (restaurant.getId() == selectedRestaurantId) {
+          selectedRestaurant = restaurant;
+          break;
+      }
+    }
+    
+    if (selectedRestaurant) {
+      this.restaurantService.setRestaurant(selectedRestaurant);
       this.router.navigate(['/guest-data']);
     }
 }

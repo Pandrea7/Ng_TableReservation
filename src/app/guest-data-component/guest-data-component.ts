@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { RestaurantService } from '../service/restaurant-service';
 import { ReservationService } from '../service/reservation-service';
+import { Reservation } from '../model/reservation';
 
 @Component({
   selector: 'app-guest-data-component',
@@ -35,15 +36,20 @@ export class GuestDataComponent {
 
   public getGuestData(form: NgForm) {
     
+      
+      
+      
+      let reservation = new Reservation();
+      reservation.setRestaurantId(this.restaurantService.getRestaurant()?.getId() || 0);
+      reservation.setGuestName(this.guestName);
+      reservation.setGuestEmail(this.guestEmail);
+
+      this.reservationService.setReservation(reservation);
+
       console.log('Kiválasztott étterem:', this.restaurantService.getRestaurant());
       console.log('Foglaló adatai:', this.guestName, this.guestEmail);
-      
-      let reservation = this.reservationService.getReservation();
-      if (reservation) {
-        reservation.setGuestName(this.guestName);
-      }
 
-      this.router.navigate(['']);
+      this.router.navigate(['/select-date']);
     
   }
   
