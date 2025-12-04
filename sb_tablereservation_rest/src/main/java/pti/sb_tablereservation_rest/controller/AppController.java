@@ -1,6 +1,5 @@
 package pti.sb_tablereservation_rest.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pti.sb_tablereservation_rest.dto.AvailableTimeSlotDto;
 import pti.sb_tablereservation_rest.dto.ReservationDto;
 import pti.sb_tablereservation_rest.dto.RestaurantDto;
+import pti.sb_tablereservation_rest.model.Reservation;
 import pti.sb_tablereservation_rest.service.AppService;
 
 
@@ -45,10 +45,14 @@ public class AppController {
 	@GetMapping("/timeslots")
     public List<AvailableTimeSlotDto> getAvailableTimeSlots(
             @RequestParam int restaurantId,
-            @RequestParam LocalDate date,
+            @RequestParam String date,
             @RequestParam int seats) {
+		
+		System.out.println("Received: restaurantId=" + restaurantId + ", date=" + date + ", seats=" + seats);
 
 		List<AvailableTimeSlotDto> availableTimeSlotDtos = service.getAvailableTimeSlots(restaurantId, date, seats);
+		
+		System.out.println("Returned: " + availableTimeSlotDtos);
         
 		return availableTimeSlotDtos;
     }
@@ -56,8 +60,8 @@ public class AppController {
 	
 	
 	@PostMapping("/reservations")
-	public ReservationDto createReservation(@RequestBody ReservationDto reservationDto) {    
+	public ReservationDto createReservation(@RequestBody Reservation reservation) {    
 		
-		return service.createReservation(reservationDto);
+		return service.createReservation(reservation);
 	}
 }

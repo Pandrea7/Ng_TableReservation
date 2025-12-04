@@ -4,12 +4,14 @@ import { NgModule } from '@angular/core';
 import { GuestDataComponent } from './guest-data-component/guest-data-component';
 import { SelectDateComponent } from './select-date-component/select-date-component';
 import { SelectTimeslotComponent } from './select-timeslot-component/select-timeslot-component';
+import { FinalizeReservationComponent } from './finalize-reservation-component/finalize-reservation-component';
 
 export const routes: Routes = [
     {path: '', component: SelectRestaurantComponent},
     {path: 'guest-data', component: GuestDataComponent},
     {path: 'select-date', component: SelectDateComponent},
-    {path: 'select-timeslot', component: SelectTimeslotComponent}
+    {path: 'select-timeslot', component: SelectTimeslotComponent},
+    {path: 'finalize-reservation', component: FinalizeReservationComponent}
 ];
 
 

@@ -3,10 +3,10 @@
 <form #reservationForm="ngForm" (submit)="saveReservationData(reservationForm)">
   
   <label>Dátum:</label>
-  <input type="date" name="reservationDate" required ngModel />
+  <input type="date" name="resDate" required ngModel />
 
   <label>Férőhelyek száma:</label>
-  <input type="number" name="seatsReserved" required min="1" ngModel />
+  <input type="number" name="seats" required min="1" ngModel />
 
   <input type="submit" value="Tovább" />
 </form>

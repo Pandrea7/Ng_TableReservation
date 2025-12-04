@@ -2,7 +2,8 @@ export class Reservation {
 
     private id: number;
     private restaurantId: number;
-    private date: Date | null;
+    private restaurantName: string;
+    private date: string;
     private hour: number;
     private seats: number;
     private guestName: string;
@@ -11,7 +12,8 @@ export class Reservation {
     public constructor() {
         this.id = 0;
         this.restaurantId = 0;
-        this.date = null;
+        this.restaurantName = "";
+        this.date = "";
         this.hour = 0;
         this.seats = 0;
         this.guestName = "";
@@ -33,10 +35,17 @@ export class Reservation {
         this.restaurantId = value;
     }
 
-    public getReservationDate(): Date | null {
+    public getRestaurantName(): string {
+        return this.restaurantName;
+    }
+    public setRestaurantName(value: string) {
+        this.restaurantName = value;
+    }
+
+    public getDate(): string {
         return this.date;
     }
-    public setReservationDate(value: Date | null) {
+    public setDate(value: string) {
         this.date = value;
     }
 
@@ -47,10 +56,11 @@ export class Reservation {
         this.hour = value;
     }
 
-    public getSeatsReserved(): number {
+    public getSeats(): number {
         return this.seats;
     }
-    public setSeatsReserved(value: number) {
+    
+    public setSeats(value: number) {
         this.seats = value;
     }
 

@@ -1,1 +1,14 @@
-<p>select-timeslot-component works!</p>
+<p>Válassz időpontot!</p>
+
+<form #selectTimeSlotForm="ngForm" (submit)="selectTimeslot(selectTimeSlotForm)">
+
+    <select name="hour" required ngModel>
+        <option value="" disabled selected>-- Szabad idősávok --</option>
+
+        <option *ngFor="let time of getAvailableTimes()" [value]="time">
+            {{ time }}:00
+        </option>
+    </select>
+
+    <input type="submit" value="Tovább"/>
+</form>

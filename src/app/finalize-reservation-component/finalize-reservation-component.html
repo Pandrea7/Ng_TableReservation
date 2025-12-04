@@ -1,0 +1,14 @@
+<h2>Foglalás összegzése</h2>
+
+<div *ngIf="getReservation()">
+    <p>Étterem: {{ getReservation()?.getRestaurantName() }}</p>
+    <p>Dátum: {{ getReservation()?.getDate() }}</p>
+    <p>Óra: {{ getReservation()?.getHour() }}:00</p>
+    <p>Férőhelyek: {{ getReservation()?.getSeats() }}</p>
+    <p>Név: {{ getReservation()?.getGuestName() }}</p>
+    <p>Email: {{ getReservation()?.getGuestEmail() }}</p>
+</div>
+
+<form>
+    <input type="submit" value="Foglalás küldése"/>
+</form>

@@ -3,6 +3,7 @@ package pti.sb_tablereservation_rest.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,36 +53,59 @@ public class AppService {
 
 
 
-	public List<AvailableTimeSlotDto> getAvailableTimeSlots(int restaurantId, LocalDate date, int requestedSeats) {
+	public List<AvailableTimeSlotDto> getAvailableTimeSlots(int restaurantId, String stringDate, int requestedSeats) {
 
-		List<AvailableTimeSlotDto> availableTimeSlotDto = new ArrayList<>();
+		List<AvailableTimeSlotDto> availableHours = new ArrayList<>();
 		
-		List<Integer> hours = reservationRepository.findAvailableHours(restaurantId, date, requestedSeats);
-	   
-
-	    for (Integer hour : hours) {
-	        availableTimeSlotDto.add(new AvailableTimeSlotDto(hour));
-	    }
+		LocalDate date = LocalDate.parse(stringDate);
+				
+		Optional<Restaurant> optRestaurant = restaurantRepository.findById(restaurantId);
 		
-		return availableTimeSlotDto;
+		if (optRestaurant.isPresent()) {
+			
+			Restaurant restaurant = optRestaurant.get();		
+		
+		    int capacityPerHour = restaurant.getCapacityPerHour();
+		    	
+		    int openHour = restaurant.getOpenHour();
+		    int closeHour = restaurant.getCloseHour();
+		    
+		    for (int hour = openHour; hour < closeHour; hour++) {
+		        
+		        Integer reservedSeats = reservationRepository.sumSeatsByRestaurantAndDateAndHour(restaurantId, date, hour);
+		        
+		        if (reservedSeats == null) {
+		        	reservedSeats = 0;
+		        }
+		    
+		        if (capacityPerHour - reservedSeats >= requestedSeats) {
+		        	availableHours.add(new AvailableTimeSlotDto(hour));
+		        }
+		    }
+		}
+	  
+		return availableHours;
 	}
 	
 	
 	
-	public ReservationDto createReservation(ReservationDto reservationDto) {
+	public ReservationDto createReservation(Reservation reservation) {
 	    
-		Reservation reservation = new Reservation(
-		        null,
-		        reservationDto.getRestaurantId(),
-		        reservationDto.getDate(),
-		        reservationDto.getHour(),
-		        reservationDto.getSeats(),
-		        reservationDto.getGuestName()
-		        reservationDto.getGuestEmail());
-
-	    reservationRepository.save(reservation);
-
-	    return reservationDto;
+		reservation = reservationRepository.save(reservation);
+		 
+		ReservationDto reservationDto = new ReservationDto();
+		     
+		reservationDto.setRestaurantId(reservation.getId());
+		 
+		reservationDto.setRestaurantId(reservation.getRestaurantId());
+		reservationDto.setSeats(reservation.getSeats());
+		reservationDto.setDate(reservation.getDate());
+		reservationDto.setHour(reservation.getHour());
+		reservationDto.setGuestName(reservation.getGuestName());
+		reservationDto.setGuestEmail(reservation.getGuestEmail());
+		
+		    
+		return reservationDto;
 	}
 	
 	

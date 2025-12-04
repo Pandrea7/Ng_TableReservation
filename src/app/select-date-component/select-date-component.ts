@@ -5,6 +5,8 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReservationService } from '../service/reservation-service';
 import { Reservation } from '../model/reservation';
+import { RestaurantService } from '../service/restaurant-service';
+import { Restaurant } from '../model/restaurant';
 
 @Component({
   selector: 'app-select-date-component',
@@ -18,33 +20,34 @@ export class SelectDateComponent {
   private http: HttpClient;
   private router: Router;
   private reservationService: ReservationService;
-  private reservationDate: Date;
-  private reservedSeats: number;
+  private restaurantService: RestaurantService;
+  private reservation: Reservation | null;
+  private restaurant: Restaurant | null;
 
 
-  public constructor(http: HttpClient, router: Router, reservationService: ReservationService){
+  public constructor(http: HttpClient, router: Router, reservationService: ReservationService, restaurantService: RestaurantService){
     this.http = http;
     this.router = router;
     this.reservationService = reservationService;
-    this.reservationDate = new Date();
-    this.reservedSeats = 0;
+    this.restaurantService = restaurantService;
+    this.reservation = this.reservationService.getReservation();
+    this.restaurant = this.restaurantService.getRestaurant();
     
   }
 
 
 
   public saveReservationData(form: NgForm) {
-    
-      let reservation = this.reservationService.getReservation();
-     
-      if (!reservation) {
-        reservation = new Reservation();
-        this.reservationService.setReservation(reservation);
-      }
-      
-      reservation.setReservationDate(this.reservationDate);
-      reservation.setSeatsReserved(this.reservedSeats);
 
-      this.router.navigate(['/select-timeslot']);
+    console.log("Form value:", form.value);
+    
+    if (this.reservation != null) {
+
+      this.reservation.setDate(form.value.resDate);
+      this.reservation.setSeats(form.value.seats);
+
+    }
+
+    this.router.navigate(['/select-timeslot']);
   }
 }

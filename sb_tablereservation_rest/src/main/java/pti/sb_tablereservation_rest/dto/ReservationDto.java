@@ -25,6 +25,9 @@ public class ReservationDto {
 	}
 	
 	
+	public ReservationDto() {}
+
+
 	public Integer getRestaurantId() {
 		return restaurantId;
 	}
@@ -70,7 +73,7 @@ public class ReservationDto {
 	public void setGuestEmail(String guestEmail) {
 		this.guestEmail = guestEmail;
 	}
-	
-	
+
+
 	
 }

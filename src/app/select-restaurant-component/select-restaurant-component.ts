@@ -4,8 +4,9 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RestaurantService } from '../service/restaurant-service';
 import { Router, RouterModule } from '@angular/router';
-import { response } from 'express';
 import { Restaurant } from '../model/restaurant';
+import { Reservation } from '../model/reservation';
+import { ReservationService } from '../service/reservation-service';
 
 @Component({
   selector: 'app-select-restaurant-component',
@@ -19,15 +20,17 @@ export class SelectRestaurantComponent {
   private http: HttpClient;
   private router: Router;
   private restaurantService: RestaurantService;
+  private reservationService: ReservationService;
   private restaurants: Restaurant[];
  
 
 
-  public constructor(http: HttpClient, router: Router, restaurantService: RestaurantService){
+  public constructor(http: HttpClient, router: Router, restaurantService: RestaurantService, reservationService: ReservationService){
 
     this.http = http;
     this.router = router;
     this.restaurantService = restaurantService;
+    this.reservationService = reservationService;
     this.restaurants = [];
     this.loadRestaurants();
 
@@ -56,7 +59,7 @@ export class SelectRestaurantComponent {
 
 public selectRestaurant(form: NgForm){
 
-    let selectedRestaurantId = form.value.restaurant;
+    let selectedRestaurantId = Number(form.value.restaurant);
 
     let selectedRestaurant = null;
 
@@ -67,8 +70,13 @@ public selectRestaurant(form: NgForm){
       }
     }
     
-    if (selectedRestaurant) {
-      this.restaurantService.setRestaurant(selectedRestaurant);
+    if (selectedRestaurant != null) {
+      let  reservation = new Reservation();
+      
+      reservation.setRestaurantId(selectedRestaurant.getId());
+      reservation.setRestaurantName(selectedRestaurant.getName());
+
+      this.reservationService.setReservation(reservation);
       this.router.navigate(['/guest-data']);
     }
 }

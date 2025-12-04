@@ -13,10 +13,12 @@ export class ReservationService {
   }
 
   public getReservation(): Reservation | null {
+    console.log('get', this.reservation);
     return this.reservation;
   }
 
   public setReservation(reservation: Reservation): void {
     this.reservation = reservation;
+    console.log('set', this.reservation);
   }
 }
