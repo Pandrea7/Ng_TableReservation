@@ -1,10 +1,13 @@
+<p>Személyes adatok: </p>
+
+
 <form #guestForm="ngForm" (submit)="getGuestData(guestForm)">
 
   <label>Név:</label>
   <input type="text" name="guestName" required ngModel/>
-
-  <label>Email cím:</label>
+  <p></p>
+  <label>E-mail cím:</label>
   <input type="email" name="guestEmail" required ngModel/>
-
+  <p></p>
   <input type="submit" value="Tovább" />
 </form>

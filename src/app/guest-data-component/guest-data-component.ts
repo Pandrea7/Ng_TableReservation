@@ -28,15 +28,20 @@ export class GuestDataComponent {
 
 
   public getGuestData(form: NgForm) {    
-    
-    if (this.reservation != null){
-      this.reservation.setGuestName(form.value.guestName);
-      this.reservation.setGuestEmail(form.value.guestEmail);
 
-      this.reservationService.setReservation(this.reservation);
+    if (form.invalid) {
+      alert("Add meg az adataid!");
+    } 
+    else {
 
-      this.router.navigate(['/select-date']);
+      if (this.reservation != null){
+        this.reservation.setGuestName(form.value.guestName);
+        this.reservation.setGuestEmail(form.value.guestEmail);
+
+        this.reservationService.setReservation(this.reservation);
+
+        this.router.navigate(['/select-date']);
+      }
     }
   }
-  
 }

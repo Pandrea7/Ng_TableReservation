@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pti.sb_tablereservation_rest.dto.AvailableTimeSlotDto;
-import pti.sb_tablereservation_rest.dto.ReservationDto;
+import pti.sb_tablereservation_rest.dto.AvailableTimeSlotsDto;
 import pti.sb_tablereservation_rest.dto.RestaurantDto;
 import pti.sb_tablereservation_rest.model.Reservation;
 import pti.sb_tablereservation_rest.service.AppService;
@@ -43,25 +42,25 @@ public class AppController {
 	
 	
 	@GetMapping("/timeslots")
-    public List<AvailableTimeSlotDto> getAvailableTimeSlots(
+    public AvailableTimeSlotsDto getAvailableTimeSlots(
             @RequestParam int restaurantId,
             @RequestParam String date,
             @RequestParam int seats) {
 		
 		System.out.println("Received: restaurantId=" + restaurantId + ", date=" + date + ", seats=" + seats);
 
-		List<AvailableTimeSlotDto> availableTimeSlotDtos = service.getAvailableTimeSlots(restaurantId, date, seats);
+		AvailableTimeSlotsDto availableTimeSlots = service.getAvailableTimeSlots(restaurantId, date, seats);
 		
-		System.out.println("Returned: " + availableTimeSlotDtos);
+		System.out.println("Returned: " + availableTimeSlots);
         
-		return availableTimeSlotDtos;
+		return availableTimeSlots;
     }
 	
 	
 	
 	@PostMapping("/reservations")
-	public ReservationDto createReservation(@RequestBody Reservation reservation) {    
+	public void createReservation(@RequestBody Reservation reservation) {    
 		
-		return service.createReservation(reservation);
+		service.createReservation(reservation);
 	}
 }

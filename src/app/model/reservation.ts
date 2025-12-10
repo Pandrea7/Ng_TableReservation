@@ -1,6 +1,6 @@
 export class Reservation {
 
-    private id: number;
+    
     private restaurantId: number;
     private restaurantName: string;
     private date: string;
@@ -10,7 +10,7 @@ export class Reservation {
     private guestEmail: string;
 
     public constructor() {
-        this.id = 0;
+        
         this.restaurantId = 0;
         this.restaurantName = "";
         this.date = "";
@@ -21,12 +21,7 @@ export class Reservation {
 
     }
 
-    public getId(): number {
-        return this.id;
-    }
-    public setId(value: number) {
-        this.id = value;
-    }
+   
 
     public getRestaurantId(): number {
         return this.restaurantId;

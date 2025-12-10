@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 
 import pti.sb_tablereservation_rest.db.ReservationRepository;
 import pti.sb_tablereservation_rest.db.RestaurantRepository;
-import pti.sb_tablereservation_rest.dto.AvailableTimeSlotDto;
-import pti.sb_tablereservation_rest.dto.ReservationDto;
+import pti.sb_tablereservation_rest.dto.AvailableTimeSlotsDto;
 import pti.sb_tablereservation_rest.dto.RestaurantDto;
 import pti.sb_tablereservation_rest.model.Reservation;
 import pti.sb_tablereservation_rest.model.Restaurant;
@@ -53,9 +52,9 @@ public class AppService {
 
 
 
-	public List<AvailableTimeSlotDto> getAvailableTimeSlots(int restaurantId, String stringDate, int requestedSeats) {
+	public AvailableTimeSlotsDto getAvailableTimeSlots(int restaurantId, String stringDate, int requestedSeats) {
 
-		List<AvailableTimeSlotDto> availableHours = new ArrayList<>();
+		AvailableTimeSlotsDto availableHours = new AvailableTimeSlotsDto();
 		
 		LocalDate date = LocalDate.parse(stringDate);
 				
@@ -79,7 +78,7 @@ public class AppService {
 		        }
 		    
 		        if (capacityPerHour - reservedSeats >= requestedSeats) {
-		        	availableHours.add(new AvailableTimeSlotDto(hour));
+		        	availableHours.addHour(hour);
 		        }
 		    }
 		}
@@ -89,23 +88,10 @@ public class AppService {
 	
 	
 	
-	public ReservationDto createReservation(Reservation reservation) {
+	public void createReservation(Reservation reservation) {
 	    
 		reservation = reservationRepository.save(reservation);
 		 
-		ReservationDto reservationDto = new ReservationDto();
-		     
-		reservationDto.setRestaurantId(reservation.getId());
-		 
-		reservationDto.setRestaurantId(reservation.getRestaurantId());
-		reservationDto.setSeats(reservation.getSeats());
-		reservationDto.setDate(reservation.getDate());
-		reservationDto.setHour(reservation.getHour());
-		reservationDto.setGuestName(reservation.getGuestName());
-		reservationDto.setGuestEmail(reservation.getGuestEmail());
-		
-		    
-		return reservationDto;
 	}
 	
 	

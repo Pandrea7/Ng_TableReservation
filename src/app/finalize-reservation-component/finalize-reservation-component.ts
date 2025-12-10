@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RestaurantService } from '../service/restaurant-service';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Reservation } from '../model/reservation';
 import { ReservationService } from '../service/reservation-service';
-import { Restaurant } from '../model/restaurant';
+
 
 @Component({
   selector: 'app-finalize-reservation-component',
@@ -36,9 +35,13 @@ public getReservation(){
   return this.reservation;
 }
 
+getMessage(): string {
+    return this.message;
+}
 
 
-public submitReservation() {
+
+public submitReservation(form: NgForm) {
   
   if (this.reservation != null){
 

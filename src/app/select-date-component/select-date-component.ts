@@ -40,14 +40,20 @@ export class SelectDateComponent {
   public saveReservationData(form: NgForm) {
 
     console.log("Form value:", form.value);
+
+    if (form.invalid) {
+      alert("Add meg az adatokat!");
+    } 
+    else {
     
-    if (this.reservation != null) {
+      if (this.reservation != null) {
 
-      this.reservation.setDate(form.value.resDate);
-      this.reservation.setSeats(form.value.seats);
+        this.reservation.setDate(form.value.resDate);
+        this.reservation.setSeats(form.value.seats);
 
+      }
+
+      this.router.navigate(['/select-timeslot']);
     }
-
-    this.router.navigate(['/select-timeslot']);
   }
 }

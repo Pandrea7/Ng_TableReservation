@@ -5,6 +5,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ReservationService } from '../service/reservation-service';
 import { Reservation } from '../model/reservation';
+import { AvailableTimeSlotsDto } from '../dto/available-tomeslots-dto';
 
 @Component({
   selector: 'app-select-timeslot-component',
@@ -38,7 +39,7 @@ export class SelectTimeslotComponent {
   public getAvailableTimes():number[]{
     return this.availableTimes;
   }
-
+  
 
 
   ngOnInit(): void {
@@ -48,7 +49,7 @@ export class SelectTimeslotComponent {
         this.reservation.getRestaurantId() != null &&
         this.reservation.getDate() &&
         this.reservation.getSeats() != null) {
-      this.loadAvailableTimes();
+        this.loadAvailableTimes();
     }
 }
   
@@ -61,18 +62,21 @@ export class SelectTimeslotComponent {
         let restaurantId= reservation.getRestaurantId();
         let date = reservation.getDate();
         let seats = reservation.getSeats()
+        
         console.log("Kimenő adatok: ", { restaurantId, date, seats });
 
         if(restaurantId != null && seats != null){
-          this.http.get<number[]>("http://localhost:8080/timeslots", {
+          this.http.get<AvailableTimeSlotsDto>("http://localhost:8080/timeslots", {
             params: {
               restaurantId: restaurantId.toString(),
               date,
               seats: seats.toString()
             }
           }).subscribe(response => {
+            
             console.log("Válasz: ", response);
-            this.availableTimes = response;
+            
+            this.availableTimes = response.availableTimeSlots;
           });
         }
     }
@@ -84,14 +88,19 @@ export class SelectTimeslotComponent {
 
   let reservation = this.reservationService.getReservation();
 
-  if (reservation != null) {
-    
-    let selectedHour = Number(form.value.hour);
-    reservation.setHour(selectedHour);
+  if (form.invalid) {
+      alert("Add meg az időpontot!");
+  } 
+  else {
 
-    this.reservationService.setReservation(reservation);
-    this.router.navigate(['/finalize-reservation']);
+    if (reservation != null) {
+      
+      let selectedHour = Number(form.value.hour);
+      reservation.setHour(selectedHour);
+
+      this.reservationService.setReservation(reservation);
+      this.router.navigate(['/finalize-reservation']);
+    }
+    }
   }
-  }
- 
 }
